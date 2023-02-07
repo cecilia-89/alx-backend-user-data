@@ -56,28 +56,18 @@ class BasicAuth(Auth):
                 user_pwd is None or type(user_pwd) != str:
             return None
 
-        if DATA.get('User') is None:
+        try:
+            for user in User.search({'email': user_email}):
+                if user.is_valid_password(user.password):
+                    return user
+        except Exception:
             return None
-
-        for user in User.search():
-            user_pwd = hashlib.sha256(user_pwd.encode()).hexdigest().lower()
-            if user.email == user_email and user.password == user_pwd:
-                return user
-        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """overloads Auth and retrieves the User instance"""
 
         auth_header = self.authorization_header(request)
-        if not auth_header:
-            return None
         base64_header = self.extract_base64_authorization_header(auth_header)
-        if not base64_header:
-            return None
         decoded_header = self.decode_base64_authorization_header(base64_header)
-        if not decoded_header:
-            return None
         email, pwrd = self.extract_user_credentials(decoded_header)
-        if not email or pwrd:
-            return None
         return self.user_object_from_credentials(email, pwrd)
