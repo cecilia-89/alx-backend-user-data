@@ -5,6 +5,7 @@ import hashlib
 from api.v1.auth.auth import Auth
 from typing import TypeVar, Tuple
 from models.user import User
+from models.base import DATA
 import re
 import base64
 
@@ -51,9 +52,13 @@ class BasicAuth(Auth):
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
         """returns user with the currect credentials"""
-        for param in [user_pwd, user_email]:
-            if param is None or type(param) != str:
-                return None
+        if user_email is None or type(user_email) != str or \
+                user_pwd is None or type(user_pwd) != str:
+            return None
+
+        if DATA.get('User') is None:
+            return None
+
         for user in User.search():
             user_pwd = hashlib.sha256(user_pwd.encode()).hexdigest().lower()
             if user.email == user_email and user.password == user_pwd:
