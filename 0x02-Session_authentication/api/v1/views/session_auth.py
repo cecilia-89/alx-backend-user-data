@@ -39,6 +39,7 @@ def logout_user() -> str:
     """deletes a user's session"""
     from api.v1.app import auth
     session_deleted = auth.destroy_session(request)
+    print(session_deleted)
     if session_deleted:
         return jsonify({}), 200
     abort(404)
