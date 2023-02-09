@@ -2,7 +2,7 @@
 """ Module of Users views
 """
 from api.v1.views import app_views
-from api.v1.auth.session_auth import SessionAuth
+from api.v1.auth.basic_auth import BasicAuth
 from flask import abort, jsonify, request
 from models.user import User
 
@@ -128,7 +128,7 @@ def update_user(user_id: str = None) -> str:
 @app_views.route('/users/me', methods=['GET'], strict_slashes=False)
 def current_user() -> str:
     """returns authenticated user"""
-    auth = SessionAuth()
+    auth = BasicAuth()
     user = auth.current_user(request)
     if user is not None:
         return jsonify(user.to_json())
