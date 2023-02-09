@@ -12,7 +12,7 @@ class SessionAuth(Auth):
 
     def create_session(self, user_id: str = None) -> str:
         """creates session_id for a user_id"""
-        if user_id is not None and type(user_id) != str:
+        if user_id is not None and type(user_id) == str:
             session_id = str(uuid.uuid4())
             self.user_id_by_session_id[session_id] = user_id
             return session_id
@@ -20,7 +20,7 @@ class SessionAuth(Auth):
 
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """returns User id based on a session_id"""
-        if session_id is not None and type(session_id) != str:
+        if session_id is not None and type(session_id) == str:
             user_id = self.user_id_by_session_id.get(session_id)
             if user_id is not None:
                 return user_id
