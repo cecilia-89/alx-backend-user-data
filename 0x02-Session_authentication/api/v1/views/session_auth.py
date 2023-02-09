@@ -35,7 +35,7 @@ def login_user() -> str:
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
-def delete_user() -> str:
+def logout_user() -> str:
     """deletes a user's session"""
     from api.v1.app import auth
     session_deleted = auth.destroy_session(request)
