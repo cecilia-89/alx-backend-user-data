@@ -11,6 +11,11 @@ class Auth:
         """returns True if the path is not in excluded_paths"""
 
         if path is not None and excluded_paths is not None:
+            for url in excluded_paths:
+                if url[-1] == '*':
+                    new_url = url.replace('*', '')
+                if path.startswith(new_url):
+                    return False
             if path[-1] != "/":
                 path = path + "/"
             if path in excluded_paths:
