@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Module: authentition"""
-from flask import request
 from typing import List, TypeVar
 
 
@@ -8,14 +7,13 @@ class Auth:
     """Authentication class"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """returns True if the path is not in excluded_paths"""
+        """returns True if the path is not in excluded_p aths"""
 
         if path is not None and excluded_paths is not None:
             for url in excluded_paths:
                 if url[-1] == '*':
-                    new_url = url.replace('*', '')
-                if path.startswith(new_url):
-                    return False
+                    if path.startswith(url[:-1]):
+                        return False
             if path[-1] != "/":
                 path = path + "/"
             if path in excluded_paths:
