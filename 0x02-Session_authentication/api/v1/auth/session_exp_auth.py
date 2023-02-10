@@ -4,6 +4,7 @@ from api.v1.auth.session_auth import SessionAuth
 from os import getenv
 from datetime import datetime, timedelta
 
+
 class SessionExpAuth(SessionAuth):
     """adds expiration date to a session"""
 
@@ -36,6 +37,6 @@ class SessionExpAuth(SessionAuth):
         created_at = self.user_id_by_session_id.get('created_at')
         if created_at:
             created_at += timedelta(seconds=self.session_duration)
-            if created_at <= datetime.now():
+            if created_at < datetime.now():
                 return self.user_id_by_session_id['user_id']
         return None
