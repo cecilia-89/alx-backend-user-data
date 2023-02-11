@@ -11,7 +11,7 @@ class SessionDBAuth(SessionExpAuth):
         """creates a user session"""
         session_id = super().create_session(user_id)
         if session_id:
-            u = UserSession(**{'user_id': user_id, 'session_id': session_id})
+            u = UserSession({'user_id': user_id, 'session_id': session_id})
             u.save()
             return session_id
 
