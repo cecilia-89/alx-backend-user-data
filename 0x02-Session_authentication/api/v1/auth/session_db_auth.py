@@ -17,6 +17,8 @@ class SessionDBAuth(SessionExpAuth):
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID"""
+        if session_id is None:
+            return None
         obj = UserSession.search({'session_id': session_id})
         if len(obj) != 0:
             return obj[0].user_id
