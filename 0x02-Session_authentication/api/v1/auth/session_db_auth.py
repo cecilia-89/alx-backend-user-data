@@ -11,15 +11,13 @@ class SessionDBAuth(SessionExpAuth):
         """creates a user session"""
         session_id = super().create_session(user_id)
         if session_id:
-            u = UserSession({'user_id': user_id, 'session_id': session_id})
+            u = UserSession(**{'user_id': user_id, 'session_id': session_id})
             u.save()
             return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID"""
-        user_id = super().user_id_for_session_id(session_id)
-        if user_id is None:
-            return None
+        user_id = self.user_id_for_session_id.get('session_id')
         return user_id
 
     def destroy_session(self, request=None):
