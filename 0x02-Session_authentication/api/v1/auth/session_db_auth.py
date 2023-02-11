@@ -13,7 +13,6 @@ class SessionDBAuth(SessionExpAuth):
         if session_id:
             u = UserSession({'user_id': user_id, 'session_id': session_id})
             u.save()
-            print(self.user_id_by_session_id)
             return session_id
 
     def user_id_for_session_id(self, session_id=None):
