@@ -19,7 +19,7 @@ class SessionDBAuth(SessionExpAuth):
         """returns the User ID"""
         if session_id is None:
             return None
-        obj = UserSession.search({'session_id': session_id})
+        obj = self.__class__.__name__.search({'session_id': session_id})
         if obj:
             return obj[0].user_id
 
