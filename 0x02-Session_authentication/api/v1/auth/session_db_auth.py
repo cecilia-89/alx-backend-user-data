@@ -13,11 +13,12 @@ class SessionDBAuth(SessionExpAuth):
         if session_id:
             u = UserSession(**{'user_id': user_id, 'session_id': session_id})
             u.save()
+            self.user_id_by_session_id[session_id] = user_id
             return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID"""
-        user_id = self.user_id_for_session_id.get('session_id')
+        user_id = self.user_id_for_session_id.get(session_id)
         return user_id
 
     def destroy_session(self, request=None):
