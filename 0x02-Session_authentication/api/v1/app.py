@@ -4,7 +4,7 @@ Route module for the API
 """
 from os import getenv
 from api.v1.views import app_views
-from api.v1.auth.basic_auth import BasicAuth
+from api.v1.auth.session_exp_auth import SessionExpAuth
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 
@@ -13,11 +13,11 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
-auth = BasicAuth()
+auth = SessionExpAuth()
 
 if getenv("AUTH_TYPE") == "session_exp_auth":
-    from api.v1.auth.session_exp_auth import SessionExpAuth
-    auth = SessionExpAuth()
+    from api.v1.auth.session_db_auth import SessionDBAuth
+    auth = SessionDBAuth()
 
 
 @app.errorhandler(401)

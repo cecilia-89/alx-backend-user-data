@@ -8,7 +8,9 @@ class SessionDBAuth(SessionExpAuth):
 
     def create_session(self, user_id=None):
         """creates a user user session"""
-        u = UserSession()
+        session_id = super().create_session(user_id)
+        u = UserSession({'user_id': user_id, 'session_id': session_id})
+        u.save()
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID"""
@@ -19,4 +21,4 @@ class SessionDBAuth(SessionExpAuth):
 
     def destroy_session(self, request=None):
         """destroys the UserSession"""
-        super().destroy_session(request)
+        return super().destroy_session(request)
