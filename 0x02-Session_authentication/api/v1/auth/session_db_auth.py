@@ -8,10 +8,12 @@ class SessionDBAuth(SessionExpAuth):
     """database expiration class"""
 
     def create_session(self, user_id=None):
-        """creates a user user session"""
+        """creates a user session"""
         session_id = super().create_session(user_id)
         if session_id:
-            u = UserSession({'user_id': user_id, 'session_id': session_id})
+            u = UserSession()
+            u.user_id = user_id
+            u.session_id = session_id
             u.save()
             return session_id
 
