@@ -9,8 +9,11 @@ class SessionDBAuth(SessionExpAuth):
     def create_session(self, user_id=None):
         """creates a user user session"""
         session_id = super().create_session(user_id)
-        u = UserSession({'user_id': user_id, 'session_id': session_id})
-        u.save()
+        if session_id:
+            u = UserSession({'user_id': user_id, 'session_id': session_id})
+            u.save()
+            print(self.user_id_by_session_id)
+            return session_id
 
     def user_id_for_session_id(self, session_id=None):
         """returns the User ID"""
