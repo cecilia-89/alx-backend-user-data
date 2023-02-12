@@ -28,6 +28,8 @@ class SessionDBAuth(SessionExpAuth):
     def destroy_session(self, request=None):
         """destroys a session"""
         session_id = self.session_cookie(request)
+        if self.user_id_for_session_id(session_id):
+            return False
         if session_id:
             user = UserSession.search({'session_id': session_id})
             if user:
