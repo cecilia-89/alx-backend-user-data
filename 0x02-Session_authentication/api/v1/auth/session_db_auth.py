@@ -2,7 +2,8 @@
 """Module: Session database Expiration"""
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
-
+from datetime import timedelta
+import datetime
 
 class SessionDBAuth(SessionExpAuth):
     """database expiration class"""
@@ -23,6 +24,9 @@ class SessionDBAuth(SessionExpAuth):
         UserSession.load_from_file()
         user_obj = UserSession.search({'session_id': session_id})
         if user_obj:
+            time = user_obj[0].created_at + timedelta(seconds=self.session_duration)
+            if time < datatime.now:
+                return None
             return user_obj[0].user_id
 
     def destroy_session(self, request=None):
