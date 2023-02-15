@@ -44,9 +44,10 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """updates a user based on keyword arguments"""
-        user = self.find_user_by(id=user_id)
-        for k, v in kwargs.items():
-            if hasattr(user, k):
-                user.k = v
-                return
-        raise ValueError
+        try:
+            user = self.find_user_by(id=user_id)
+            for k, v in kwargs.items():
+                if hasattr(user, k):
+                    user.k = v
+        except NoResultFound:
+            raise ValueError
