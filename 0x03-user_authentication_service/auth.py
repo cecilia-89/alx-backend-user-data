@@ -54,9 +54,10 @@ class Auth:
     def destroy_session(self, user_id: int):
         """destroys a users's session"""
         try:
-            self._db.update_user(user_id, {"session_id": None})
+            self._db.update_user(user_id, session_id=None)
         except ValueError:
             return None
+        return None
 
     def get_reset_password_token(self, email):
         """user corresponding to the email"""
