@@ -40,7 +40,7 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """returns user based on the argument"""
-        self._session.query(User).filter_by(**kwargs).first()
+        self._session.query(User).filter_by(**kwargs).one()
 
     def update_user(self, user_id: int, **kwargs: Dict) -> None:
         """updates a user based on keyword arguments"""
