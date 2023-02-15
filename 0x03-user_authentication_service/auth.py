@@ -56,7 +56,7 @@ class Auth:
         self._db.update_user(user_id, {"session_id": None})
 
 
-def _hash_password(password: str) -> ByteString:
+def _hash_password(password: str) -> bytes:
     """takes in a password string arguments and returns bytes"""
     bytes = password.encode('utf-8')
     salt = bcrypt.gensalt()
