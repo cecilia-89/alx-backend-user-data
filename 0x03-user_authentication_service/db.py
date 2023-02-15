@@ -41,8 +41,6 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """returns user based on the argument"""
         user = self._session.query(User).filter_by(**kwargs).one_or_none()
-        print(User.__dict__)
-        print(hasattr(user, 'noemail'))
         if user is None:
             raise NoResultFound
         for k in kwargs.keys():
