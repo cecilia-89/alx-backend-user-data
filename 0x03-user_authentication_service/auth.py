@@ -4,7 +4,6 @@ import bcrypt
 from uuid import uuid4
 from db import DB
 from user import User
-from typing import ByteString
 from sqlalchemy.orm.exc import NoResultFound
 
 

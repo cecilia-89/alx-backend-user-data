@@ -8,7 +8,7 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/')
+@app.route('/', strict_slashes=False, methods=['GET'])
 def hello():
     """returns 'hello world' in french"""
     return jsonify(message='Bienvenue')
