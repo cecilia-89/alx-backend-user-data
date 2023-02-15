@@ -44,7 +44,7 @@ def logout():
     """logins a user"""
     cookie = request.cookies.get('session_id')
     if cookie is None:
-        return cookie
+        return None
     user = AUTH.get_user_from_session_id(cookie)
     if user:
         AUTH.destroy_session(user.id)
@@ -57,7 +57,7 @@ def profile():
     """logins a user"""
     cookie = request.cookies.get('session_id')
     if cookie is None:
-        return cookie
+        return None
     user = AUTH.get_user_from_session_id(cookie)
     if user:
         return jsonify({"email": user.email})
