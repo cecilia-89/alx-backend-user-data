@@ -54,9 +54,26 @@ class Auth:
     def destroy_session(self, user_id: int) -> None:
         """destroys a users's session"""
         try:
-            self._db.update_user(user_id, session_id=None)
+            self._db.update_user(user_id, {"session_id": None})
         except ValueError:
             return None
+
+    def get_reset_password_token(self, email: str) -> str:
+        """user corresponding to the email"""
+        user = self._db.find_user_by(**{'email': email})
+        if user:
+            user.reset_token = uuid4()
+            return user.reset_token
+        raise ValueError
+
+    def update_password(self, reset_token: str, password: str) -> None:
+        """updates a user's password"""
+        user = self._db.find_user_by({'reset_token': reset_token})
+        if not user:
+            raise ValueError
+        hashed_password = _hash_password(password)
+        dict = {'hashed_password': hashed_password, 'reset_token': None}
+        self._db.update_user(user.id, **dict)
 
 
 def _hash_password(password: str) -> bytes:
