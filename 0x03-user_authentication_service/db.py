@@ -40,13 +40,7 @@ class DB:
 
     def find_user_by(self, **kwargs) -> User:
         """returns user based on the argument"""
-        user = self._session.query(User).filter_by(**kwargs).one_or_none()
-        if user is None:
-            raise NoResultFound
-        for k in kwargs.keys():
-            if hasattr(user, k):
-                return user
-        raise InvalidRequestError
+        return self._session.query(User).filter_by(**kwargs).one()
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """updates a user based on keyword arguments"""
