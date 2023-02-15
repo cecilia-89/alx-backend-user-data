@@ -60,7 +60,7 @@ def profile():
     abort(403)
 
 @app.route('/reset_password', strict_slashes=False, methods=['POST'])
-def reset():
+def get_reset_password_token():
     """resets a user"""
     email = request.form.get('email')
     try:
@@ -70,7 +70,7 @@ def reset():
         abort(403)
 
 @app.route('/reset_password', strict_slashes=False, methods=['PUT'])
-def rest_password():
+def update_password():
     """resets a user"""
     email = request.form.get('email')
     reset_token = request.form.get('reset_token')
