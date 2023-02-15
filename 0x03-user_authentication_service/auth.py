@@ -56,7 +56,7 @@ class Auth:
         try:
             self._db.update_user(user_id, **{"session_id": None})
         except ValueError:
-            pass
+            return None
 
 
 def _hash_password(password: str) -> bytes:
