@@ -50,24 +50,9 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs: Dict) -> None:
         """updates a user based on keyword arguments"""
-        self.find_user_by(id=user_id).update(kwargs)
-
-my_db = DB()
-
-user = my_db.add_user("test@test.com", "PwdHashed")
-print(user.id)
-
-find_user = my_db.find_user_by(email="test@test.com")
-print(find_user.id)
-
-try:
-    find_user = my_db.find_user_by(email="test2@test.com")
-    print(find_user.id)
-except NoResultFound:
-    print("Not found")
-
-try:
-    find_user = my_db.find_user_by(no_email="test@test.com")
-    print(find_user.id)
-except InvalidRequestError:
-    print("Invalid")    
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if hasattr(user, k):
+                user.k = v
+                return
+        raise ValueError
