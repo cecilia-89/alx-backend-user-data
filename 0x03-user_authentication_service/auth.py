@@ -58,15 +58,16 @@ class Auth:
         except ValueError:
             return None
 
-    def get_reset_password_token(self, email: str) -> str:
+    def get_reset_password_token(self, email):
         """user corresponding to the email"""
-        user = self._db.find_user_by(**{'email': email})
-        if user:
-            user.reset_token = uuid4()
+        try:
+            user = self._db.find_user_by(**{'email': email})
+            self._db.update_user(user.id, **{'reset_token': _generate_uuid()})
             return user.reset_token
-        raise ValueError
+        except NoResultFound:
+            raise ValueError
 
-    def update_password(self, reset_token: str, password: str) -> None:
+    def update_password(self, reset_token, password):
         """updates a user's password"""
         user = self._db.find_user_by({'reset_token': reset_token})
         if not user:

@@ -63,17 +63,17 @@ def profile():
 def reset():
     """resets a user"""
     email = request.form.get('email')
-    user = AUTH._db.find_user_by(**{'email': email})
-    if user:
-        AUTH.get_reset_password_token(email)
-        return jsonify({"email": email, "reset_token": user.reset_token})
-    abort(403)
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+        return jsonify({"email": email, "reset_token": reset_token})
+    except ValueError:
+        abort(403)
 
 @app.route('/reset_password', strict_slashes=False, methods=['PUT'])
 def rest_password():
     """resets a user"""
     email = request.form.get('email')
-    reset_token = request.form.get('reser_token')
+    reset_token = request.form.get('reset_token')
     new_password = request.form.get('new_password')
 
     try:
