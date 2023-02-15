@@ -3,7 +3,7 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from user import Base, User
 from typing import Dict
@@ -48,5 +48,6 @@ class DB:
             for k, v in kwargs.items():
                 if hasattr(user, k):
                     user.k = v
-        except InvalidRequestError:
+        except NoResultFound:
             raise ValueError
+
