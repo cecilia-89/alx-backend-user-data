@@ -3,6 +3,7 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from user import Base, User
@@ -39,7 +40,12 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """returns user based on the argument"""
-        return self._session.query(User).filter_by(**kwargs).one()
+        try:
+            self._session.query(User).filter_by(**kwargs).first()
+        except NoResultFound:
+            raise(NoResultFound)
+        except InvalidRequestError:
+            raise(InvalidRequestError)
 
     def update_user(self, user_id: int, **kwargs: Dict) -> None:
         """updates a user based on keyword arguments"""
