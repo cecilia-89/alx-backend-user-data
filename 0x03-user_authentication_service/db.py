@@ -40,12 +40,7 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """returns user based on the argument"""
-        try:
-            self._session.query(User).filter_by(**kwargs).first()
-        except NoResultFound:
-            raise(NoResultFound)
-        except InvalidRequestError:
-            raise(InvalidRequestError)
+        self._session.query(User).filter_by(**kwargs).first()
 
     def update_user(self, user_id: int, **kwargs: Dict) -> None:
         """updates a user based on keyword arguments"""
