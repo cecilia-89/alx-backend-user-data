@@ -58,7 +58,7 @@ class Auth:
         except ValueError:
             return None
 
-    def get_reset_password_token(self, email):
+    def get_reset_password_token(self, email: str) -> None:
         """user corresponding to the email"""
         try:
             token =  _generate_uuid()
