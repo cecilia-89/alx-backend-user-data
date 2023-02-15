@@ -38,9 +38,11 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: Dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """returns user based on the argument"""
         user = self._session.query(User).filter_by(**kwargs).one_or_none()
+        print(User.__dict__)
+        print(hasattr(user, 'noemail'))
         if user is None:
             raise NoResultFound
         for k in kwargs.keys():
@@ -48,7 +50,7 @@ class DB:
                 return user
         raise InvalidRequestError
 
-    def update_user(self, user_id: int, **kwargs: Dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """updates a user based on keyword arguments"""
         user = self.find_user_by(id=user_id)
         for k, v in kwargs.items():
@@ -56,3 +58,23 @@ class DB:
                 user.k = v
                 return
         raise ValueError
+
+my_db = DB()
+
+user = my_db.add_user("test@test.com", "PwdHashed")
+print(user.id)
+
+find_user = my_db.find_user_by(email="test@test.com")
+print(find_user.id)
+
+try:
+    find_user = my_db.find_user_by(email="test2@test.com")
+    print(find_user.id)
+except NoResultFound:
+    print("Not found")
+
+try:
+    find_user = my_db.find_user_by(no_email="test@test.com")
+    print(find_user.id)
+except InvalidRequestError:
+    print("Invalid")
