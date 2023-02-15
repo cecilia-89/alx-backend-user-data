@@ -60,7 +60,7 @@ def profile():
     abort(403)
 
 @app.route('/reset_password', strict_slashes=False, methods=['POST'])
-def profile():
+def reset():
     """resets a user"""
     email = request.form.get('email')
     user = AUTH._db.find_user_by(**{'email': email})
@@ -70,7 +70,7 @@ def profile():
     abort(403)
 
 @app.route('/reset_password', strict_slashes=False, methods=['PUT'])
-def profile():
+def rest_password():
     """resets a user"""
     email = request.form.get('email')
     reset_token = request.form.get('reser_token')
