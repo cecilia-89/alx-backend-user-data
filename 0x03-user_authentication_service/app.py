@@ -53,7 +53,7 @@ def logout():
 
 
 @app.route('/profile', strict_slashes=False, methods=['GET'])
-def logout():
+def profile():
     """logins a user"""
     cookie = request.cookies.get('session_id')
     if cookie is None:
