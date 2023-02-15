@@ -48,5 +48,6 @@ class DB:
         for k, v in kwargs.items():
             if hasattr(user, k):
                 user.k = v
+                self._session.commit()
                 return
         raise ValueError
