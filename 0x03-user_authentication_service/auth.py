@@ -72,13 +72,9 @@ class Auth:
         """updates a user's password"""
         try:
             user = self._db.find_user_by(**{'reset_token': reset_token})
-            print(user.hashed_password)
-            print(user.reset_token)
             hashed_password = _hash_password(password)
             param = {'hashed_password': hashed_password, 'reset_tokn': None}
             self._db.update_user(user.id, **param)
-            print(user.hashed_password)
-            print(user.reset_token)
         except NoResultFound:
             raise ValueError
 
