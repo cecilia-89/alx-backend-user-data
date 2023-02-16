@@ -76,7 +76,7 @@ class Auth:
             param = {'hashed_password': hashed_password, 'reset_tokn': None}
             self._db.update_user(user.id, **param)
         except NoResultFound:
-            raise KeyError
+            raise ValueError
 
 
 def _hash_password(password: str) -> bytes:
