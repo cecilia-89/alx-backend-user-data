@@ -71,13 +71,12 @@ class Auth:
     def update_password(self, reset_token, password):
         """updates a user's password"""
         try:
-            user = self._db.find_user_by({'reset_token': reset_token})
+            user = self._db.find_user_by(**{'reset_token': reset_token})
+            hashed_password = _hash_password(password)
+            param = {'hashed_password': hashed_password, 'reset_token': None}
+            self._db.update_user(user.id, **param)
         except NoResultFound:
             raise ValueError
-
-        hashed_password = _hash_password(password)
-        param = {'hashed_password': hashed_password, 'reset_token': None}
-        self._db.update_user(user.id, **param)
 
 
 def _hash_password(password: str) -> bytes:
