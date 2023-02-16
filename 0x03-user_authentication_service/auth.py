@@ -89,10 +89,3 @@ def _hash_password(password: str) -> bytes:
 def _generate_uuid() -> str:
     """generates uuid"""
     return str(uuid4())
-
-auth = Auth()
-
-u1 = auth._db.add_user("test@test.com", "PwdHashed")
-u2 = auth._db.add_user("catabong89@test.com", "hashedPassword")
-auth.get_reset_password_token("catabong89@test.com")
-auth.update_password(u2.reset_token, 'newHashedPassword')
