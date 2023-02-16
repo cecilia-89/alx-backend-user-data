@@ -3,7 +3,7 @@
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.session import Session
 from user import Base, User
 from typing import Dict
@@ -43,12 +43,10 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """updates a user based on keyword arguments"""
-        try:
-            user = self.find_user_by(id=user_id)
-            for k, v in kwargs.items():
-                if hasattr(user, k):
-                    setattr(user, k, v)
-                    return
-                self._session.commit()
-        except NoResultFound:
-            raise ValueError
+        user = self.find_user_by(id=user_id)
+        for k, v in kwargs.items():
+            if hasattr(user, k):
+                setattr(user, k, v)
+                return
+            self._session.commit()
+        raise ValueError
