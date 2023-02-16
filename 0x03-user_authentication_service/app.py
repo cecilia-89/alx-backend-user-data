@@ -60,6 +60,7 @@ def profile():
         return jsonify({"email": user.email})
     abort(403)
 
+
 @app.route('/reset_password', strict_slashes=False, methods=['POST'])
 def get_reset_password_token():
     """resets a user"""
@@ -69,6 +70,7 @@ def get_reset_password_token():
         return jsonify({"email": email, "reset_token": reset_token})
     except ValueError:
         abort(403)
+
 
 @app.route('/reset_password', strict_slashes=False, methods=['PUT'])
 def update_password():
