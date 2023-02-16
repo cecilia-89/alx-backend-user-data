@@ -45,7 +45,10 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """updates a user based on keyword arguments"""
         user = self.find_user_by(id=user_id)
-        for k, v in kwargs.items():
-            if hasattr(user, k):
-                setattr(user, k, v)
-        raise ValueError
+        column_names = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in column_names:
+                raise ValueError
+
+        for key, value in kwargs.items():
+            setattr(user, key, value)
