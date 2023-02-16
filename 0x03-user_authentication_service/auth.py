@@ -72,9 +72,13 @@ class Auth:
         """updates a user's password"""
         try:
             user = self._db.find_user_by(**{'reset_token': reset_token})
+            print(user.hashed_password)
+            print(user.reset_token)
             hashed_password = _hash_password(password)
             param = {'hashed_password': hashed_password, 'reset_tokn': None}
             self._db.update_user(user.id, **param)
+            print(user.hashed_password)
+            print(user.reset_token)
         except NoResultFound:
             raise ValueError
 
@@ -89,3 +93,10 @@ def _hash_password(password: str) -> bytes:
 def _generate_uuid() -> str:
     """generates uuid"""
     return str(uuid4())
+
+auth = Auth()
+
+u1 = auth._db.add_user("test@test.com", "PwdHashed")
+u2 = auth._db.add_user("catabong89@test.com", "hashedPassword")
+auth.get_reset_password_token("catabong89@test.com")
+auth.update_password(u2.reset_token, 'newHashedPassword')
