@@ -7,7 +7,8 @@ import bcrypt
 import re
 from os import getenv
 
-PII_FIELDS = ('name', 'email', 'ssn', 'password', 'ip')
+PII_FIELDS = ('name', 'email', 'ssn', 'password', 'phone')
+
 
 def filter_datum(fields: List[str],
                  redaction: str,
@@ -37,7 +38,7 @@ def get_logger() -> logging.Logger:
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """retruns connector to database"""
     user = getenv('PERSONAL_DATA_DB_USERNAME') or 'root'
-    password = getenv('PERSONAL_DATA_DB_USERNAME') or ""
+    password = getenv('PERSONAL_DATA_DB_PASSWORD') or ""
     host = getenv('PERSONAL_DATA_DB_HOST') or "localhost"
     db_name = getenv('PERSONAL_DATA_DB_NAME')
 
