@@ -7,6 +7,6 @@ def hash_password(password):
     return bcrypt.hashpw(encoded, bcrypt.gensalt)
 
 
-def is_valid(hased_password, password):
+def is_valid(hashed_password, password):
     """determines if a password is valid"""
     return bcrypt.checkpw(password.encode(), hashed_password)
