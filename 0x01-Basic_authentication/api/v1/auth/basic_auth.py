@@ -40,7 +40,7 @@ class BasicAuth(Auth):
         decoded_base = decoded_base64_authorization_header
         if decoded_base is not None and type(decoded_base) == str:
             if ':' in decoded_base:
-                email = re.match('(.+?):', decoded_base)[1]
+                email = re.match('(.+):', decoded_base)[1]
                 password = re.match('.+?:(.+)', decoded_base)[1]
                 return (email, password)
 
@@ -64,11 +64,8 @@ class BasicAuth(Auth):
         """overloads Auth and retrieves the User instance"""
 
         auth_header = self.authorization_header(request)
-        print("auth_header:", auth_header)
         base64_header = self.extract_base64_authorization_header(auth_header)
-        print("base64_header:", base64_header)
         decoded_header = self.decode_base64_authorization_header(base64_header)
-        print("decoded_header:", decoded_header)
         email, pwrd = self.extract_user_credentials(decoded_header)
-        print(f"email: {email} password: {pwrd}")
         return self.user_object_from_credentials(email, pwrd)
+ 
