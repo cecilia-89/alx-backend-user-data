@@ -2,7 +2,7 @@
 """Module: filtered_logger.py"""
 from typing import List
 import logging
-import mysql
+import mysql.connector
 import bcrypt
 import re
 from os import getenv
