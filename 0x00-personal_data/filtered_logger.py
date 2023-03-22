@@ -20,7 +20,7 @@ def filter_datum(fields: List[str],
     return message
 
 
-def get_logger():
+def get_logger() -> logging.Logger:
     """returns a logging.Logger object"""
     logger = logging.getLogger('user_data')
     logger.setLevel(logging.INFO)
@@ -34,7 +34,7 @@ def get_logger():
     return logger
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """retruns connector to database"""
     user = getenv('PERSONAL_DATA_DB_USERNAME') or 'root'
     password = getenv('PERSONAL_DATA_DB_USERNAME') or ""
